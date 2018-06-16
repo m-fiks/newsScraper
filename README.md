@@ -1,0 +1,2 @@
+# newsScraper
+Scrape news articles
