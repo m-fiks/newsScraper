@@ -14,23 +14,28 @@ request("https://www.npr.org/sections/technology/", (err, res, html) => {
 
     const $ = cheerio.load(html);
     //console.log($);
-
-    const titles = [];
-    const urls = [];
-    const sums = [];
+    
+    const results = [];
 
     $("h2.title").each((i, elem) => {
         let title = $(elem).text();
         let url = $(elem).children().attr("href")
-        titles.push(title);
-        urls.push(url);
+        //get summary
+        let summary;
+        $("p.teaser").each((i, elem) => {
+            summary = $(elem).text();
+            //console.log(summary);
+            return summary;
+        })
+        //push to results save as object
+        results.push({
+            title: title,
+            url: url,
+            summary: summary
+        })
     })
 
-    $("p.teaser").each((i, elem) => {
-        let summary = $(elem).text();
-        //console.log(summary);
-        sums.push(summary);
-    })
+    //console.log(results)
 
 })
 
