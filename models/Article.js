@@ -19,7 +19,8 @@ const ArticleSchema = new Schema({
     // },
     saved: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
     notes: [{
         type: Schema.Types.ObjectId,

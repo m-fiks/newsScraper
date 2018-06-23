@@ -51,11 +51,11 @@ app.get("/scrape", (req, res) => {
         //console.log(results)
         db.Article.create(results)
         .then((dbArticle) => {
-           //console.log(dbArticle)
+           console.log(dbArticle)
         })
     })
 })
-    // res.send('scrape complete');
+    res.redirect('/all');
 })
 
 app.get("/all", (req,res) => {

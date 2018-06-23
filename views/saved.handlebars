@@ -1,8 +1,8 @@
-<div class="card"> {{#if saved}}
-  <div class="card-body"> 
+<div class="card"> {{#each data }}
+  <div class="card-body">
     <h5 class="card-title">{{ title }}</h5>
     <a href={{ link }} class="link">Link to Article</a>
     <p class="card-text">{{ summary }}</p>
     <a href="#" class="btn btn-primary">save dis </a>
   </div>
-{{/if}} </div>
+{{/each}} </div> 

@@ -2,7 +2,7 @@ $(document).ready(() => {
     console.log('ready')
 
     $("#scrape-button").on("click", () => {
-        window.location.href="/all"
+        window.location.href="/scrape"
     })
 
     $("#save-button").on("click", () => {
@@ -12,12 +12,12 @@ $(document).ready(() => {
     $(document).on("click",".article-time", function(e) {
     e.preventDefault();
     let thisId = $(this).attr("data-id");
-    console.log(thisId)
+    //console.log(thisId)
         $.ajax({
             method: "POST",
             url: "/articles/" + thisId,
         }).then((data) => {
-            console.log(`success ${data} added`)
+            console.log(`success added`)
         })
     })
 
