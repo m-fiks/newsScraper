@@ -51,7 +51,7 @@ app.get("/scrape", (req, res) => {
         //console.log(results)
         db.Article.create(results)
         .then((dbArticle) => {
-           console.log(dbArticle)
+           //console.log(dbArticle)
         })
     })
 })
@@ -60,7 +60,7 @@ app.get("/scrape", (req, res) => {
 
 app.get("/all", (req,res) => {
     db.Article.find({})
-    .populate("notes")
+    //.populate("notes")
     .then((dbArticle) => {
         console.log(dbArticle)
         // res.json(dbArticle)
@@ -72,12 +72,30 @@ app.get("/all", (req,res) => {
 })
 
 app.get("/saved", (req,res) => {
-    db.Article.find({ saved: true})
-    .then((dbArticle) => {
-        res.render("saved", dbArticle)
-    })
+    db.Article.find(
+        {saved: true},
+    (function (err,data) {
+        res.render("saved", data)
+    }))
     .catch((err) => {
         res.json(err)
+    })
+})
+
+app.post("/articles/:id", (req, res) => {
+    console.log(req.params);
+    db.Article.findOneAndUpdate(
+    { "_id": req.params.id},
+    {
+        $set: {
+             saved : true,
+        }
+    })
+    .then((dbArticle) => {
+        res.json('good')
+    })
+    .catch((err) => {
+        res.json(err);
     })
 })
 
