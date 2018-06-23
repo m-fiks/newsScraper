@@ -1,0 +1,7 @@
+.card-body {
+    border: solid 1px black;
+    background-color: gainsboro;
+    margin: 10px;
+    text-align: center;
+    color: purple;
+}

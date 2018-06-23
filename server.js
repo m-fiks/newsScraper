@@ -9,40 +9,38 @@ const PORT = 8080;
 
 app = express();
 
+app.engine('handlebars', hbrs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
 //connect to mongo db
-mongoose.connect("mongodb://localhost/arts");
-
+mongoose.connect("mongodb://localhost/scraper");
 app.get("/scrape", (req, res) => {
 
     request("https://thehardtimes.net/", (err, res, html) => {
     if (err) console.log(err);
 
     const results = [];
-
     const $ = cheerio.load(html);
     //console.log($);
 
     $("h2.post-title").each((i, elem) => {
         let title = $(elem).text().trim();
-        let url = $(elem).children().attr("href");
-        let summary;
-        //console.log(url)
-        // //get summary
+        let link = $(elem).children().attr("href");
+       
         // let summary;
-        $("div.post-content").each((i, elem) => {
-            summary = $(elem).text().trim();
-            //console.log(summary)
-            return summary
-        });
+        // $("div.post-content").each((i, elem) => {
+        //     summary = $(elem).text().trim();
+        //     //console.log(summary)
+        //     return summary
+        // });
         // // //push to results save as object
         results.push({
             title: title,
-            link: url,
-            summary: summary
+            link: link
         })
 
         //console.log(results)
@@ -62,7 +60,7 @@ app.get("/scrape", (req, res) => {
 app.get("/all", (req,res) => {
     db.Article.find({})
     .then((dbArticle) => {
-        res.json(dbArticle)
+        res.render("index", {dbArticle})
     })
     .catch((err) => {
         res.json(err)
