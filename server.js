@@ -16,11 +16,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+    res.render("index")
+})
 //connect to mongo db
-mongoose.connect("mongodb://localhost/scraper");
+mongoose.connect("mongodb://localhost/scrappy");
+
 app.get("/scrape", (req, res) => {
 
-    request("https://thehardtimes.net/", (err, res, html) => {
+    request("https://thehardtimes.net/music/", (err, res, html) => {
     if (err) console.log(err);
 
     const results = [];
@@ -40,7 +44,8 @@ app.get("/scrape", (req, res) => {
         // // //push to results save as object
         results.push({
             title: title,
-            link: link
+            link: link,
+            saved: false
         })
 
         //console.log(results)
@@ -48,19 +53,28 @@ app.get("/scrape", (req, res) => {
         .then((dbArticle) => {
            console.log(dbArticle)
         })
-        .catch((err) => {
-            console.log(err)
-        })
     })
 })
-    res.send('scrape complete');
+    // res.send('scrape complete');
 })
 
-//get ALL of the articles
 app.get("/all", (req,res) => {
     db.Article.find({})
+    .populate("notes")
     .then((dbArticle) => {
+        console.log(dbArticle)
+        // res.json(dbArticle)
         res.render("index", {dbArticle})
+    })
+    .catch((err) => {
+        res.json(err)
+    })
+})
+
+app.get("/saved", (req,res) => {
+    db.Article.find({ saved: true})
+    .then((dbArticle) => {
+        res.render("saved", dbArticle)
     })
     .catch((err) => {
         res.json(err)

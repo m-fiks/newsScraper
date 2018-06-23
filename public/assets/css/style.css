@@ -4,4 +4,23 @@
     margin: 10px;
     text-align: center;
     color: purple;
+    width: 550px;
+}
+
+#scrape-button {
+    background-color: rgba(172, 255, 47, 0.644);
+    margin: -45px 42px 30px 215px;
+}
+
+#save-button {
+    margin: -45px 42px 30px 215px;
+}
+
+.btn {
+    background-color:rgba(42, 175, 175, 0.842);
+}
+
+.link {
+    border: solid 1px black;
+    padding: 5px;
 }
