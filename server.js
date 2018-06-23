@@ -4,39 +4,58 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cheerio = require("cheerio");
 const request = require("request");
-
+const db = require("./models")
 const PORT = 8080;
 
 app = express();
 
-request("https://www.npr.org/sections/technology/", (err, res, html) => {
+app.use(bodyParser.urlencoded({ extended: true }));
+// Use express.static to serve the public folder as a static directory
+app.use(express.static("public"));
+
+//connect to mongo db
+mongoose.connect("mongodb://localhost/news");
+
+app.get("/scrape", (req, res) => {
+
+    request("https://thehardtimes.net/", (err, res, html) => {
     if (err) console.log(err);
+
+    const results = [];
 
     const $ = cheerio.load(html);
     //console.log($);
-    
-    const results = [];
 
-    $("h2.title").each((i, elem) => {
-        let title = $(elem).text();
-        let url = $(elem).children().attr("href")
-        //get summary
+    $("h2.post-title").each((i, elem) => {
+        let title = $(elem).text().trim();;
+        let url = $(elem).children().attr("href");
         let summary;
-        $("p.teaser").each((i, elem) => {
-            summary = $(elem).text();
-            //console.log(summary);
-            return summary;
-        })
-        //push to results save as object
+        //console.log(url)
+        // //get summary
+        // let summary;
+        $("div.post-content").each((i, elem) => {
+            summary = $(elem).text().trim();
+            //console.log(summary)
+            return summary
+        });
+        // // //push to results save as object
         results.push({
             title: title,
-            url: url,
+            link: url,
             summary: summary
         })
+
+        console.log(results)
+        db.Article.create(results)
+        .then((dbArticle) => {
+            console.log(dbArticle)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     })
-
-    //console.log(results)
-
+})
+    res.send('scrape complete');
 })
 
 app.listen(PORT, () => {
