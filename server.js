@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 //connect to mongo db
-mongoose.connect("mongodb://localhost/news");
+mongoose.connect("mongodb://localhost/arts");
 
 app.get("/scrape", (req, res) => {
 
@@ -27,7 +27,7 @@ app.get("/scrape", (req, res) => {
     //console.log($);
 
     $("h2.post-title").each((i, elem) => {
-        let title = $(elem).text().trim();;
+        let title = $(elem).text().trim();
         let url = $(elem).children().attr("href");
         let summary;
         //console.log(url)
@@ -45,10 +45,10 @@ app.get("/scrape", (req, res) => {
             summary: summary
         })
 
-        console.log(results)
+        //console.log(results)
         db.Article.create(results)
         .then((dbArticle) => {
-            console.log(dbArticle)
+           console.log(dbArticle)
         })
         .catch((err) => {
             console.log(err)
@@ -56,6 +56,17 @@ app.get("/scrape", (req, res) => {
     })
 })
     res.send('scrape complete');
+})
+
+//get ALL of the articles
+app.get("/all", (req,res) => {
+    db.Article.find({})
+    .then((dbArticle) => {
+        res.json(dbArticle)
+    })
+    .catch((err) => {
+        res.json(err)
+    })
 })
 
 app.listen(PORT, () => {
