@@ -24,3 +24,7 @@
     border: solid 1px black;
     padding: 5px;
 }
+
+#modal {
+    width: 500px;
+}

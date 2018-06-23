@@ -38,7 +38,6 @@ router.get("/scrape", (req, res) => {
             link: link,
             saved: false
         })
-
         //console.log(results)
         db.Article.create(results)
         .then((dbArticle) => {
@@ -49,6 +48,7 @@ router.get("/scrape", (req, res) => {
     res.redirect('/all');
 })
 
+//get all articles
 router.get("/all", (req,res) => {
     db.Article.find({})
     //.populate("notes")
@@ -62,30 +62,33 @@ router.get("/all", (req,res) => {
     })
 })
 
-router.get("/saved", (req,res) => {
-    db.Article.find(
-        {saved: true},
-    (function (err,data) {
-        res.render("saved", data)
-    }))
-    .catch((err) => {
-        res.json(err)
+//show notes for article
+router.get("/allnotes/:id", (req,res) => {
+    console.log("HERE" + req.params.id)
+    db.Article.findOne({_id: req.params.id})
+    .populate("note")
+    .then(function(dbArticle) {
+        res.json(dbArticle)
+    })
+    .catch(function(err){
+        res.json(err);
     })
 })
 
-router.post("/articles/:id", (req, res) => {
-    console.log(req.params);
-    db.Article.findOneAndUpdate(
-    { "_id": req.params.id},
-    {
-        $set: {
-             saved : true,
-        }
+
+//add a note
+router.post("/notes/:id", (req, res) => {
+    console.log(req.body)
+    db.Note.create(req.body)
+    .then(function(dbNote) {
+        return  db.Article.findOneAndUpdate({ "_id": req.params.id},
+        { note: dbNote._id},
+        { new: true}
+        );
+    }).then(function(dbArticle) {
+        res.json(dbArticle)
     })
-    .then((dbArticle) => {
-        res.json('good')
-    })
-    .catch((err) => {
+    .catch(function(err) {
         res.json(err);
     })
 })
