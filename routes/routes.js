@@ -10,10 +10,6 @@ const db = require("../models")
 router.get("/", (req, res) => {
     res.render("index")
 })
-//connect to mongo db
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrappy";
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
 
 router.get("/scrape", (req, res) => {
 

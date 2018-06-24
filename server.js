@@ -11,6 +11,11 @@ const routes = require("./routes/routes")
 
 app = express();
 
+//connect to mongo db
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrappy";
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
 app.engine('handlebars', hbrs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
