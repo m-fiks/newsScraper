@@ -1,4 +1,8 @@
+
+
 <div class="card"> {{#each dbArticle}}
+  <div class="row">
+  <div class="col-md-6 col-xs-12">
   <div class="card-body"> 
     <h5 class="card-title">{{ title }}</h5>
     <a href={{ link }} target="_blank" class="link">Link to Article</a>
@@ -10,10 +14,8 @@
       <h5>Notes</h5>
       <p class="all-of-the-notes"></p>
   </div>
-  
-  
-  
-  </div>
+</div>
+
 <!--add note form-->
 <div id="modal" class="modal">
         <div class="modal-content">
@@ -35,4 +37,7 @@
         </div>
 </div>
 </div>
+</div>
+</div>
 {{/each}}
+

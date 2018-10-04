@@ -1,2 +1,3 @@
-# newsScraper
+# news scraper
 Scrape news articles
+
