@@ -1,3 +1,7 @@
+body {
+    font-family: 'K2D', sans-serif;
+}
+
 .card-body {
     border: solid 1px black;
     background-color: gainsboro;
@@ -6,9 +10,12 @@
     color: purple;
 }
 
+.jumbotron {
+    background-color: aquamarine;
+}
+
 #scrape-button {
     background-color: rgba(172, 255, 47, 0.644);
-    margin: -45px 42px 30px 215px;
 }
 
 #save-button {

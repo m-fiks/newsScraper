@@ -15,9 +15,9 @@ router.get("/scrape", (req, res) => {
 
     const results = [];
     const $ = cheerio.load(html);
-    //console.log($);
 
     $("h2.post-title").each((i, elem) => {
+        //console.log($(this).prev())
         let title = $(elem).text().trim();
         let link = $(elem).children().attr("href");
     
@@ -26,10 +26,10 @@ router.get("/scrape", (req, res) => {
             link: link,
             saved: false
         })
-        //console.log(results)
+
         db.Article.create(results)
         .then((dbArticle) => {
-           console.log(dbArticle)
+        console.log(dbArticle)
         })
     })
 })
@@ -41,7 +41,7 @@ router.get("/all", (req,res) => {
     db.Article.find({})
     //.populate("notes")
     .then((dbArticle) => {
-        console.log(dbArticle)
+        //console.log(dbArticle)
         // res.json(dbArticle)
         res.render("index", {dbArticle})
     })
@@ -52,7 +52,7 @@ router.get("/all", (req,res) => {
 
 //show notes for article
 router.get("/allnotes/:id", (req,res) => {
-    console.log("HERE" + req.params.id)
+    //console.log("HERE" + req.params.id)
     db.Article.findOne({_id: req.params.id})
     .populate("note")
     .then(function(dbArticle) {
@@ -66,7 +66,7 @@ router.get("/allnotes/:id", (req,res) => {
 
 //add a note
 router.post("/notes/:id", (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     db.Note.create(req.body)
     .then(function(dbNote) {
         return  db.Article.findOneAndUpdate({ "_id": req.params.id},
