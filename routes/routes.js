@@ -31,7 +31,7 @@ router.get("/scrape", (req, res) => {
 
         db.Article.create(results)
         .then((dbArticle) => {
-        console.log(dbArticle)
+        //console.log(dbArticle)
         })
     })
 })
@@ -65,13 +65,12 @@ router.get("/allnotes/:id", (req,res) => {
     })
 })
 
-
 //add a note
 router.post("/notes/:id", (req, res) => {
     //console.log(req.body)
     db.Note.create(req.body)
     .then(function(dbNote) {
-        return  db.Article.findOneAndUpdate({ "_id": req.params.id},
+        db.Article.findOneAndUpdate({ "_id": req.params.id},
         { note: dbNote._id},
         { new: true}
         );
@@ -80,6 +79,16 @@ router.post("/notes/:id", (req, res) => {
     })
     .catch(function(err) {
         res.json(err);
+    })
+})
+
+router.post("/delete/:id", (req, res) => {
+    console.log(req.params.id)
+    db.Article.findByIdAndDelete({"_id" : req.params.id})
+    .then((err, data) => {
+        if (err) console.log(err);
+    
+        res.redirect('/all');
     })
 })
 
