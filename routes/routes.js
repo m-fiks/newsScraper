@@ -17,22 +17,22 @@ router.get("/scrape", (req, res) => {
     const $ = cheerio.load(html);
 
     $("article").each((i, elem) => {
-        console.log($(elem).children(".featured-image").children().attr("href"));
-        // let title = $(elem).children(".post-header").text();
-        // let summary = $(elem).children(".post-content").text();
-        // let image = $(elem).children(".featured-image").text();
-        // let url = 
+        let title = $(elem).children(".post-header").text();
+        let summary = $(elem).children(".post-content").text();
+        let image = $(elem).children(".featured-image").text();
+        let link = $(elem).children(".featured-image").children().attr("href");
     
-        // results.push({
-        //     title: title,
-        //     link: link,
-        //     saved: false
-        // })
+        results.push({
+            title: title,
+            summary: summary,
+            link: link,
+            saved: false
+        })
 
-        // db.Article.create(results)
-        // .then((dbArticle) => {
-        // console.log(dbArticle)
-        // })
+        db.Article.create(results)
+        .then((dbArticle) => {
+        console.log(dbArticle)
+        })
     })
 })
     res.redirect('/all');
