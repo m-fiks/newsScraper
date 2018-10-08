@@ -10,16 +10,18 @@ router.get("/", (req, res) => {
 
 router.get("/scrape", (req, res) => {
 
-    request("https://www.theonion.com/", (err, res, html) => {
+    request("https://thehardtimes.net/", (err, res, html) => {
     if (err) console.log(err);
 
     const results = [];
     const $ = cheerio.load(html);
 
-    $(".content-wrapper").each((i, elem) => {
-        console.log($(elem).children().attr("h6"))
-        // let title = $(elem).text().trim();
-        // let link = $(elem).children().attr("href");
+    $("article").each((i, elem) => {
+        console.log($(elem).children(".featured-image").children().attr("href"));
+        // let title = $(elem).children(".post-header").text();
+        // let summary = $(elem).children(".post-content").text();
+        // let image = $(elem).children(".featured-image").text();
+        // let url = 
     
         // results.push({
         //     title: title,
