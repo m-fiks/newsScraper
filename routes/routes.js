@@ -10,27 +10,27 @@ router.get("/", (req, res) => {
 
 router.get("/scrape", (req, res) => {
 
-    request("https://thehardtimes.net/music/", (err, res, html) => {
+    request("https://www.theonion.com/", (err, res, html) => {
     if (err) console.log(err);
 
     const results = [];
     const $ = cheerio.load(html);
 
-    $("h2.post-title").each((i, elem) => {
-        //console.log($(this).prev())
-        let title = $(elem).text().trim();
-        let link = $(elem).children().attr("href");
+    $(".content-wrapper").each((i, elem) => {
+        console.log($(elem).children().attr("h6"))
+        // let title = $(elem).text().trim();
+        // let link = $(elem).children().attr("href");
     
-        results.push({
-            title: title,
-            link: link,
-            saved: false
-        })
+        // results.push({
+        //     title: title,
+        //     link: link,
+        //     saved: false
+        // })
 
-        db.Article.create(results)
-        .then((dbArticle) => {
-        console.log(dbArticle)
-        })
+        // db.Article.create(results)
+        // .then((dbArticle) => {
+        // console.log(dbArticle)
+        // })
     })
 })
     res.redirect('/all');
