@@ -26,6 +26,16 @@ body {
     background-color:rgba(42, 175, 175, 0.842);
 }
 
+.btn:hover{
+    border: solid 1px plum;
+    background-color: plum;
+}
+
+.del-button {
+    background-color: hotpink;
+    border: solid 1px hotpink;
+}
+
 .link {
     border: solid 1px black;
     padding: 5px;
