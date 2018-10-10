@@ -6,7 +6,7 @@
   <div class="card-body"> 
     <h5 class="card-title">{{ title }}</h5>
     <p class="card-text">{{ summary }}</p>
-    <a href={{ link }} target="_blank" class="link">Link to Article</a>
+    <button class="btn btn-primary"><a href={{ link }} target="_blank" class="link">Link to Article</a></button>
       <button data-id="{{_id}}" data-toggle="modal" type="button" class="btn btn-primary article-time">Add Note </button>
       <button data-id="{{_id}}" type="button" class="btn btn-primary note-time">See Notes! </button>
       <form action="/delete/{{_id}}" method="POST">

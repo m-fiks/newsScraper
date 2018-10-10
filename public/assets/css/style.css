@@ -22,6 +22,9 @@ body {
     margin: -45px 42px 30px 215px;
 }
 
+a {
+    color: whitesmoke;
+}
 .btn {
     background-color:rgba(42, 175, 175, 0.842);
 }
@@ -34,11 +37,6 @@ body {
 .del-button {
     background-color: hotpink;
     border: solid 1px hotpink;
-}
-
-.link {
-    border: solid 1px black;
-    padding: 5px;
 }
 
 #modal {
