@@ -21,10 +21,10 @@ const ArticleSchema = new Schema({
         required: true,
         default: false
     },
-    note: [{
+    note: {
         type: Schema.Types.ObjectId,
         ref: "Note"
-    }]
+    }
 });
 
 const Article = mongoose.model("Article", ArticleSchema);

@@ -31,7 +31,7 @@ router.get("/scrape", (req, res) => {
 
         db.Article.create(results)
         .then((dbArticle) => {
-        //console.log(dbArticle)
+            console.log(dbArticle)
         })
     })
 })
@@ -55,7 +55,8 @@ router.get("/all", (req,res) => {
 //show notes for article
 router.get("/allnotes/:id", (req,res) => {
     //console.log("HERE" + req.params.id)
-    db.Article.findOne({_id: req.params.id})
+    db.Article
+    .findOne({_id: req.params.id})
     .populate("note")
     .then(function(dbArticle) {
         res.json(dbArticle)
@@ -66,14 +67,13 @@ router.get("/allnotes/:id", (req,res) => {
 })
 
 //add a note
-router.post("/notes/:id", (req, res) => {
-    //console.log(req.body)
-    db.Note.create(req.body)
+router.post("/articles/:id", (req, res) => {
+    console.log(req.body)
+    db.Note
+    .create(req.body)
     .then(function(dbNote) {
-        db.Article.findOneAndUpdate({ "_id": req.params.id},
-        { note: dbNote._id},
-        { new: true}
-        );
+        return db.Article.findOneAndUpdate({ "_id": req.params.id}, { note: dbNote._id}, { new: true}
+    );
     }).then(function(dbArticle) {
         res.json(dbArticle)
     })

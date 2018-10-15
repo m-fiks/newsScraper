@@ -17,14 +17,14 @@ $(document).ready(() => {
         $("#modal").show();
     })
 
-    $(document).on("click","#submit", function(e) {
+    $("#submit").on("click", function(e) {
     e.preventDefault();
     let thisId = $(this).attr("data-id");
     let input = $("#note-input").val().trim();
-    //console.log(input)
+
         $.ajax({
             method: "POST",
-            url: "/notes/" + thisId,
+            url: "/articles/" + thisId,
             data: {
                 title: "note",
                 body: input
@@ -44,8 +44,9 @@ $(document).ready(() => {
             method: "GET",
             url: "/allnotes/" + id,
         }).then((data) => {
+            console.log(data.note);
             $(".all-notes").show();
-            $(".all-of-the-notes").append(data.note[0].body);
+            $(".all-of-the-notes").append(data.note.body);
             
         })
     })
