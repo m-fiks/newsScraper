@@ -45,8 +45,8 @@ $(document).ready(() => {
             url: "/allnotes/" + id,
         }).then((data) => {
             console.log(data.note);
-            $(".all-notes").show();
-            $(".all-of-the-notes").append(data.note.body);
+            // $(".all-notes").show();
+            // $(".all-of-the-notes").append(data.note.body);
             
         })
     })

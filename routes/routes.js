@@ -43,8 +43,6 @@ router.get("/all", (req,res) => {
     db.Article.find({})
     //.populate("notes")
     .then((dbArticle) => {
-        //console.log(dbArticle)
-        // res.json(dbArticle)
         res.render("index", {dbArticle})
     })
     .catch((err) => {
@@ -59,7 +57,7 @@ router.get("/allnotes/:id", (req,res) => {
     .findOne({_id: req.params.id})
     .populate("note")
     .then(function(dbArticle) {
-        res.json(dbArticle)
+        res.render("saved", {dbArticle})
     })
     .catch(function(err){
         res.json(err);
