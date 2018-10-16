@@ -52,12 +52,13 @@ router.get("/all", (req,res) => {
 
 //show notes for article
 router.get("/allnotes/:id", (req,res) => {
-    //console.log("HERE" + req.params.id)
+    console.log(req.params)
     db.Article
     .findOne({_id: req.params.id})
     .populate("note")
-    .then(function(dbArticle) {
-        res.render("saved", {dbArticle})
+    .then((dbArticle) => {
+        //console.log(dbArticle)
+        res.render("saved", {dbArticle});
     })
     .catch(function(err){
         res.json(err);

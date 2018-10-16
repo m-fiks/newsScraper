@@ -21,7 +21,6 @@ $(document).ready(() => {
     e.preventDefault();
     let thisId = $(this).attr("data-id");
     let input = $("#note-input").val().trim();
-
         $.ajax({
             method: "POST",
             url: "/articles/" + thisId,
@@ -43,7 +42,8 @@ $(document).ready(() => {
         $.ajax({
             method: "GET",
             url: "/allnotes/" + id,
-        }).then((data) => {
+        })
+        .then((data) => {
             console.log(data.note);
             // $(".all-notes").show();
             // $(".all-of-the-notes").append(data.note.body);
